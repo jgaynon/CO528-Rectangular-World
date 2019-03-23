@@ -1,18 +1,19 @@
 package mainProgram;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import tools.*;
 import java.io.*;
-import com.opencsv.CSVParser;
-import com.opencsv.CSVParserBuilder;
+
 import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
+
+
+import Managers.*;
 
 public class RectangleNav {
 
 	public static String gridFile = "src/resources/grid.csv";
+	public static String puzzleFile = "src/resources/puzzles.csv";
 
 	public static void main(String[] args) {
 		setup();
@@ -21,6 +22,7 @@ public class RectangleNav {
 
 	public static void setup() {
 		newPlayfield(gridFile);
+		PuzzleManager.loadPuzzles(puzzleFile);
 
 	}
 
@@ -37,44 +39,46 @@ public class RectangleNav {
 			CSVReader csvReader = new CSVReader(filereader);
 			String[] nextRecord;
 
-			// create a new rectangle object
+			//a working list of the current rectangles vertices
 			ArrayList<Vertex> vertList = new ArrayList<Vertex>();
 			// read data line by line
+			boolean done = false;
 			while ((nextRecord = csvReader.readNext()) != null) {
-				for (String cell : nextRecord) {
+				while (vertList.size() < 4 & done != true) {
+					for (String cell : nextRecord) {
 
-					if (cell.contains(",")) {
 						String[] xy = cell.split(",");
 						xy[0] = xy[0].replaceAll(" ", "");
 						xy[1] = xy[1].replaceAll(" ", "");
 						Integer x = Integer.parseInt(xy[0]);
 						Integer y = Integer.parseInt(xy[1]);
 						Vertex v = new Vertex(x, y);
-						
-						if (vertList.size() < 4) {
-							vertList.add(v);
-							System.out.print(xy[0] + "," + xy[1] + "\t");
-						} else {
-							
-							Rectangle r = new Rectangle(vertList.get(0), vertList.get(1), vertList.get(2),
-									vertList.get(3));
-							
-							play.addRectangle(r);
-							play.printNoOfRectangles();
-							vertList.clear();
 
-						}
+						vertList.add(v);
+						System.out.println(xy[0] + "," + xy[1] + "\t");
+
 					}
-					System.out.println();
 
+					Rectangle r = new Rectangle(vertList.get(0), vertList.get(1), vertList.get(2), vertList.get(3));
+					play.addRectangle(r);
+					play.printNoOfRectangles();
+					vertList.clear();
+					if ((nextRecord = csvReader.readNext()) == null)
+						done = true;
 				}
+
+				System.out.println();
+
 			}
+
 			csvReader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
+
+
 }
 
 /*

@@ -141,6 +141,17 @@ public class Vertex implements Comparable<Vertex>
     {
 	return "(" + x + ", " + y + ")";
     }
+    
+	public static Vertex coordStringToVert(String input) {
+		String[] xy = input.split(",");
+		xy[0] = xy[0].replaceAll(" ", "");
+		xy[1] = xy[1].replaceAll(" ", "");
+		int[] xyi = new int[2];  
+		xyi[0] = Integer.parseInt(xy[0]);
+		xyi[1] = Integer.parseInt(xy[1]);
+		Vertex v = new Vertex(xyi[0], xyi[1]);
+		return v;
+	}
 
     interface Predicate
     {
