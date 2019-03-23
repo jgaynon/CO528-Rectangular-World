@@ -1,35 +1,42 @@
 package mainProgram;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tools.*;
 import java.io.*;
 
 import com.opencsv.CSVReader;
 
-
-import Managers.*;
+import managers.*;
 
 public class RectangleNav {
 
 	public static String gridFile = "src/resources/grid.csv";
 	public static String puzzleFile = "src/resources/puzzles.csv";
+    Playfield play = new Playfield();
 
 	public static void main(String[] args) {
 		setup();
+		
 
 	}
 
 	public static void setup() {
-		newPlayfield(gridFile);
+		Playfield play = PlayfieldManager.getPlayfield();
+		setupPlayfield(gridFile, play);
 		PuzzleManager.loadPuzzles(puzzleFile);
-
+		NextConfigManager ncm = new NextConfigManager();
+		Vertex v = play.getAllVertices().get(63);
+		System.out.println(v);
+		System.out.println(ncm.nextConfigs(v));
+		System.out.println(ncm.nextConfigs(v).size());
 	}
 
-	public static void newPlayfield(String file) {
+	public static void setupPlayfield(String file, Playfield play) {
 
 		try {
-			Playfield play = new Playfield();
+
 			// Create a filereader
 			// object with CSV filepath as a parameter.
 			FileReader filereader = new FileReader(file);
@@ -39,7 +46,7 @@ public class RectangleNav {
 			CSVReader csvReader = new CSVReader(filereader);
 			String[] nextRecord;
 
-			//a working list of the current rectangles vertices
+			// a working list of the current rectangles vertices
 			ArrayList<Vertex> vertList = new ArrayList<Vertex>();
 			// read data line by line
 			boolean done = false;
@@ -78,11 +85,4 @@ public class RectangleNav {
 
 	}
 
-
 }
-
-/*
- * public List<Vertex> nextConfigs(Vertex state) {
- * 
- * } }
- */

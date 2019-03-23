@@ -152,6 +152,8 @@ public class Vertex implements Comparable<Vertex>
 		Vertex v = new Vertex(xyi[0], xyi[1]);
 		return v;
 	}
+	
+	
 
     interface Predicate
     {
