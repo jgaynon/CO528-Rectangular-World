@@ -1,8 +1,10 @@
 package tools;
-
+//Jake Gaynon-jmg56
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+/*Rectangle provides an iterable object allowing access to the coordinates of the shape's vertices*/
 
 public class Rectangle implements Iterable<Vertex> {
 	List<Vertex> rectVertexList = new ArrayList<>();
@@ -19,7 +21,7 @@ public class Rectangle implements Iterable<Vertex> {
 	public Iterator<Vertex> iterator() {
 		return this.rectVertexList.iterator();
 	}
-
+	//Returns all vertices as a List.
 	public List<Vertex> getAllVertices() {
 		return rectVertexList;
 	}

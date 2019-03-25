@@ -1,3 +1,4 @@
+//Jake Gaynon-jmg56
 package managers;
 
 import java.io.FileReader;
@@ -7,14 +8,25 @@ import com.opencsv.CSVReader;
 
 import tools.Puzzle;
 
+//PuzzleManager loads the puzzles from the csv file and translates them into Puzzle objects.
 public class PuzzleManager {
-	public static void loadPuzzles(String file) {
-		
-		ArrayList<Puzzle> puzzleList = new ArrayList<Puzzle>();
-		
+
+	ArrayList<Puzzle> puzzleList = new ArrayList<Puzzle>();
+	private static PuzzleManager instance = null;
+
+	public static PuzzleManager getInstance() {
+		if (instance == null)
+			instance = new PuzzleManager();
+		return instance;
+	}
+	
+	// this uses opencsv, an open source csv parser library.
+	// http://opencsv.sourceforge.net/
+	public void loadPuzzles(String file) {
+
 		try {
 			// Create a filereader
-			// object with CSV filepath as a parameter.
+			// object with CSV file path as a parameter.
 			FileReader filereader = new FileReader(file);
 
 			// create csvReader object passing
@@ -25,9 +37,14 @@ public class PuzzleManager {
 				Puzzle p = new Puzzle(nextRecord);
 				puzzleList.add(p);
 			}
-			System.out.println("PuzzleList:" + puzzleList.size()); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// Returns a list of all loaded puzzles.
+	public ArrayList<Puzzle> getPuzzleList() {
+
+		return puzzleList;
 	}
 }

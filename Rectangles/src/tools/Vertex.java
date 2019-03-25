@@ -1,6 +1,5 @@
 package tools;
-import java.util.*;
-
+//Vertex.java originally by Prof A.M.King
 public class Vertex implements Comparable<Vertex>
 {
     private int x;
@@ -142,7 +141,10 @@ public class Vertex implements Comparable<Vertex>
 	return "(" + x + ", " + y + ")";
     }
     
-	public static Vertex coordStringToVert(String input) {
+    /* Converts a coordinate from a string to a Vertex object.
+     * 
+     * @param input		The coordinate string to convert to a vertex object*/
+	public static Vertex coordStringToVertex(String input) {
 		String[] xy = input.split(",");
 		xy[0] = xy[0].replaceAll(" ", "");
 		xy[1] = xy[1].replaceAll(" ", "");
